@@ -97,7 +97,7 @@ namespace MediaBrowser.Channels.IPTV
 
         public string Name
         {
-            get { return "Video Bookmarks"; }
+            get { return "IPTV"; }
         }
 
         public InternalChannelFeatures GetChannelFeatures()
