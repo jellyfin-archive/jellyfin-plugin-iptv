@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediaBrowser.Model.Reflection;
+using MediaBrowser.Model.Dto;
 
 namespace MediaBrowser.Channels.IPTV
 {
@@ -63,13 +64,14 @@ namespace MediaBrowser.Channels.IPTV
                     ContentType = ChannelMediaContentType.Clip,
                     MediaType = ChannelMediaType.Video,
 
-                    MediaSources = new List<ChannelMediaInfo>
+                    MediaSources = new List<MediaSourceInfo>
                     {
                         new ChannelMediaInfo
                         {
                             Path = s.Path,
                             Protocol = s.Protocol
-                        }  
+
+                        }.ToMediaSource()
                     }
                 };
 
