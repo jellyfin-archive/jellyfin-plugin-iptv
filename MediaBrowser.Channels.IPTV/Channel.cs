@@ -43,7 +43,7 @@ namespace MediaBrowser.Channels.IPTV
         }
 
 
-        private Task<ChannelItemResult> GetChannelItemsInternal(string userId, CancellationToken cancellationToken)
+        private Task<ChannelItemResult> GetChannelItemsInternal(Guid userId, CancellationToken cancellationToken)
         {
             var items = new List<ChannelItemInfo>();
 
