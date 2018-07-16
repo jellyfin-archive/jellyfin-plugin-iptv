@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div data-role="popup" id="streamPopup" data-overlay-theme="a" data-dismissible="false">
+            <div data-role="popup" id="streamPopup" data-overlay-theme="a" data-dismissible="false" class="dialog dialog-fixedSize dialog-small hide" style="position: fixed; top: 10%;">
 
                 <div class="ui-bar-a" style="text-align: center; padding: 0 20px;">
                     <h3>New IPTV Stream</h3>
@@ -60,7 +60,7 @@
 
                         <br />
                         <button type="submit" data-theme="b" data-mini="true">Add</button>
-                        <button type="button" data-theme="c" onclick="$('#streamPopup').popup('close')" data-mini="true">Cancel</button>
+                        <button type="button" data-theme="c" onclick="$('#streamPopup').addClass('hide');" data-mini="true">Cancel</button>
 
                     </form>
                 </div>
@@ -130,7 +130,7 @@
 
                 addStreamPopup: function (page) {
                     $('#name', page).val("").focus();
-                    $('#streamPopup', page).popup('open');
+                    $('#streamPopup', page).removeClass('hide');
                     $('#name', page).focus();
                 },
 
@@ -156,7 +156,7 @@
 
                 $('#streamForm', page).on('submit', function (e) {
 
-                    $('#streamPopup', page).popup('close');
+                    $('#streamPopup', page).addClass('hide');
                     var form = this;
 
                     var newEntry = true;
