@@ -39,11 +39,11 @@ namespace MediaBrowser.Channels.IPTV
         {
             _logger.Debug("cat ID : " + query.FolderId);
 
-            return await GetChannelItemsInternal(query.UserId, cancellationToken).ConfigureAwait(false);
+            return await GetChannelItemsInternal(cancellationToken).ConfigureAwait(false);
         }
 
 
-        private Task<ChannelItemResult> GetChannelItemsInternal(Guid userId, CancellationToken cancellationToken)
+        private Task<ChannelItemResult> GetChannelItemsInternal(CancellationToken cancellationToken)
         {
             var items = new List<ChannelItemInfo>();
 

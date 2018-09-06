@@ -6,13 +6,15 @@ using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Logging;
 using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
+using System.IO;
+using MediaBrowser.Model.Drawing;
 
 namespace MediaBrowser.Channels.IPTV
 {
     /// <summary>
     /// Class Plugin
     /// </summary>
-    public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
+    public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages, IHasThumbImage
     {
         public static ILogger Logger { get; set; }
 
@@ -61,8 +63,20 @@ namespace MediaBrowser.Channels.IPTV
             }
         }
 
-        
-        
+        public Stream GetThumbImage()
+        {
+            var type = GetType();
+            return type.Assembly.GetManifestResourceStream(type.Namespace + ".Images.thumb.png");
+        }
+
+        public ImageFormat ThumbImageFormat
+        {
+            get
+            {
+                return ImageFormat.Png;
+            }
+        }
+
         /// <summary>
         /// Gets the instance.
         /// </summary>
