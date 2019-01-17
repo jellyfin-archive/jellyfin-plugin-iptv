@@ -4,7 +4,7 @@ using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Channels;
 using MediaBrowser.Model.Drawing;
 using MediaBrowser.Model.Entities;
-using MediaBrowser.Model.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +20,9 @@ namespace MediaBrowser.Channels.IPTV
         private readonly ILogger _logger;
         private IAssemblyInfo _assemblyInfo;
 
-        public Channel(ILogManager logManager, IAssemblyInfo assemblyInfo)
+        public Channel(ILoggerFactory loggerFactory, IAssemblyInfo assemblyInfo)
         {
-            _logger = logManager.GetLogger(GetType().Name);
+            _logger = loggerFactory.CreateLogger(GetType().Name);
             _assemblyInfo = assemblyInfo;
         }
 
@@ -37,7 +37,7 @@ namespace MediaBrowser.Channels.IPTV
 
         public async Task<ChannelItemResult> GetChannelItems(InternalChannelItemQuery query, CancellationToken cancellationToken)
         {
-            _logger.Debug("cat ID : " + query.FolderId);
+            _logger.LogDebug("cat ID : {id}", query.FolderId);
 
             return await GetChannelItemsInternal(cancellationToken).ConfigureAwait(false);
         }
