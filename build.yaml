@@ -1,0 +1,13 @@
+---
+name: "jellyfin-plugin-iptv"
+guid: "a59b5c4b-05a8-488f-bfa8-7a63fffc7639"
+version: "1.0.0"
+nicename: "IPTV"
+description: "Enable IPTV support in Jellyfin"
+overview: "Enable IPTV support in Jellyfin"
+category: "General"
+artifacts:
+  - "MediaBrowser.Channels.IPTV.dll"
+build_type: "dotnet"
+dotnet_configuration: "Release"
+dotnet_framework: "netstandard2.0"
