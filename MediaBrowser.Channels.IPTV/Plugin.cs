@@ -36,7 +36,7 @@ namespace MediaBrowser.Channels.IPTV
             };
         }
 
-        private Guid _id = new Guid("c333f63b-83e9-48d2-8b9a-c5aba546fb1e");
+        private Guid _id = new Guid("a59b5c4b-05a8-488f-bfa8-7a63fffc7639");
         public override Guid Id
         {
             get { return _id; }
