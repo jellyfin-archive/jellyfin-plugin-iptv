@@ -5,7 +5,7 @@ version: "1.0.0"
 nicename: "IPTV"
 description: "Enable IPTV support in Jellyfin"
 overview: "Enable IPTV support in Jellyfin"
-category: "General"
+category: "Channel"
 artifacts:
   - "MediaBrowser.Channels.IPTV.dll"
 build_type: "dotnet"
