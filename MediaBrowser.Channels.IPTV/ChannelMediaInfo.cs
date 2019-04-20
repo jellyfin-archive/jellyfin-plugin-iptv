@@ -78,11 +78,9 @@ namespace MediaBrowser.Channels.IPTV
 
         private IEnumerable<MediaStream> GetMediaStreams(ChannelMediaInfo info)
         {
-            var list = new List<MediaStream>();
-
             if (!string.IsNullOrWhiteSpace(info.VideoCodec))
             {
-                list.Add(new MediaStream
+                yield return new MediaStream
                 {
                     Type = MediaStreamType.Video,
                     Width = info.Width,
@@ -94,12 +92,12 @@ namespace MediaBrowser.Channels.IPTV
                     Codec = info.VideoCodec,
                     BitRate = info.VideoBitrate,
                     AverageFrameRate = info.Framerate
-                });
+                };
             }
 
             if (!string.IsNullOrWhiteSpace(info.AudioCodec))
             {
-                list.Add(new MediaStream
+                yield return new MediaStream
                 {
                     Type = MediaStreamType.Audio,
                     Index = -1,
@@ -107,10 +105,8 @@ namespace MediaBrowser.Channels.IPTV
                     BitRate = info.AudioBitrate,
                     Channels = info.AudioChannels,
                     SampleRate = info.AudioSampleRate
-                });
+                };
             }
-
-            return list;
         }
     }
 }

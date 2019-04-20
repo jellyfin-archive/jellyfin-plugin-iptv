@@ -21,7 +21,7 @@ namespace MediaBrowser.Channels.IPTV.Configuration
         /// </summary>
         public PluginConfiguration()
         {
-            Bookmarks = new Bookmark[] {};
+            Bookmarks = Array.Empty<Bookmark>();
         }
     }
 

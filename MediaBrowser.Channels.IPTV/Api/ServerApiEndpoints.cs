@@ -26,7 +26,7 @@ namespace MediaBrowser.Channels.IPTV.Api
         public string ImagePath { get; set; }
     }
 
-    class ServerApiEndpoints : IService
+    public class ServerApiEndpoints : IService
     {
         public void Post(VideoSend request)
         {
@@ -34,17 +34,18 @@ namespace MediaBrowser.Channels.IPTV.Api
             {
                 throw new ArgumentException("Name cannot be empty.");
             }
+
             if (string.IsNullOrWhiteSpace(request.Path))
             {
                 throw new ArgumentException("Path cannot be empty.");
             }
+
             if (string.IsNullOrWhiteSpace(request.UserId))
             {
                 throw new ArgumentException("UserId cannot be empty.");
             }
 
             var list = Plugin.Instance.Configuration.Bookmarks.ToList();
-
             list.Add(new Bookmark
             {
                 UserId = request.UserId,
