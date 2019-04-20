@@ -10,36 +10,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediaBrowser.Model.Reflection;
 using MediaBrowser.Model.Dto;
 
 namespace MediaBrowser.Channels.IPTV
 {
-    class Channel : IChannel, IHasCacheKey
+    public class Channel : IChannel, IHasCacheKey
     {
         private readonly ILogger _logger;
-        private IAssemblyInfo _assemblyInfo;
 
-        public Channel(ILoggerFactory loggerFactory, IAssemblyInfo assemblyInfo)
+        public Channel(ILogger<Channel> logger)
         {
-            _logger = loggerFactory.CreateLogger(GetType().Name);
-            _assemblyInfo = assemblyInfo;
+            _logger = logger;
         }
 
-        public string DataVersion
-        {
-            get
-            {
-                // Increment as needed to invalidate all caches
-                return "1";
-            }
-        }
+        // Increment as needed to invalidate all caches
+        public string DataVersion => "1";
 
-        public async Task<ChannelItemResult> GetChannelItems(InternalChannelItemQuery query, CancellationToken cancellationToken)
+        public Task<ChannelItemResult> GetChannelItems(InternalChannelItemQuery query, CancellationToken cancellationToken)
         {
-            _logger.LogDebug("cat ID : {id}", query.FolderId);
+            _logger.LogDebug("cat ID : {Id}", query.FolderId);
 
-            return await GetChannelItemsInternal(cancellationToken).ConfigureAwait(false);
+            return GetChannelItemsInternal(cancellationToken);
         }
 
 
@@ -77,9 +68,10 @@ namespace MediaBrowser.Channels.IPTV
 
                 items.Add(item);
             }
+
             return Task.FromResult(new ChannelItemResult
             {
-                Items = items.ToList()
+                Items = items
             });
         }
 
@@ -92,15 +84,9 @@ namespace MediaBrowser.Channels.IPTV
             };
         }
 
-        public string HomePageUrl
-        {
-            get { return ""; }
-        }
+        public string HomePageUrl => string.Empty;
 
-        public string Name
-        {
-            get { return "IPTV"; }
-        }
+        public string Name => "IPTV";
 
         public InternalChannelFeatures GetChannelFeatures()
         {
@@ -127,13 +113,13 @@ namespace MediaBrowser.Channels.IPTV
                 case ImageType.Thumb:
                 case ImageType.Backdrop:
                     {
-                        var path = GetType().Namespace + ".Images." + type.ToString().ToLower() + ".png";
+                        var path = GetType().Namespace + ".Images." + type.ToString().ToLowerInvariant() + ".png";
 
                         return Task.FromResult(new DynamicImageResponse
                         {
                             Format = ImageFormat.Png,
                             HasImage = true,
-                            Stream = _assemblyInfo.GetManifestResourceStream(GetType(), path)
+                            Stream = typeof(Channel).Assembly.GetManifestResourceStream(path)
                         });
                     }
                 default:
@@ -147,19 +133,11 @@ namespace MediaBrowser.Channels.IPTV
         }
 
         public ChannelParentalRating ParentalRating
-        {
-            get { return ChannelParentalRating.GeneralAudience; }
-        }
+            => ChannelParentalRating.GeneralAudience;
 
         public string GetCacheKey(string userId)
-        {
-            return Guid.NewGuid().ToString("N");
-        }
+            => Guid.NewGuid().ToString("N");
 
-        public string Description
-        {
-            get { return string.Empty; }
-        }
-
+        public string Description => string.Empty;
     }
 }

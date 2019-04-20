@@ -1,7 +1,7 @@
 ---
 name: "jellyfin-plugin-iptv"
 guid: "a59b5c4b-05a8-488f-bfa8-7a63fffc7639"
-version: "2" # Please increment with each pull request
+version: "3" # Please increment with each pull request
 jellyfin_version: "10.3.0" # The earliest binary-compatible version
 owner: "jellyfin"
 nicename: "IPTV"
