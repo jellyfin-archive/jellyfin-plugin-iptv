@@ -5,12 +5,9 @@
 </head>
 <body>
     <div id="IPTVConfigurationPage" data-role="page" class="page type-interior pluginConfigurationPage IPTVConfigurationPage" data-require="emby-input,emby-button,emby-select,listViewStyle,paper-icon-button-light">
-
         <div data-role="content">
             <div class="content-primary">
-
                 <div class="readOnlyContent">
-
                     <div style="display: flex; align-items: center;margin: 1em 0;">
                         <h1 style="margin:0;">IPTV Streams</h1>
                         <button is="emby-button" type="button" class="raised btnAdd submit mini" style="margin-left:1em;" title="Add">
@@ -20,10 +17,8 @@
                     </div>
                     <div class="streamList paperList">
                     </div>
-
                 </div>
             </div>
-
             <div data-role="popup" id="streamPopup" class="dialog dialog-fixedSize dialog-medium-tall hide" style="position: fixed; top: 10%;">
                 <form id="streamForm" style="padding:1em;">
                     <div class="ui-bar-a" style="text-align: center; padding: 0 20px;">
@@ -58,36 +53,25 @@
                     </div>
                 </form>
             </div>
-
         </div>
-
         <script type="text/javascript">
-
             var IPTVConfigurationPage = {
                 pluginUniqueId: "a59b5c4b-05a8-488f-bfa8-7a63fffc7639",
 
                 populateStreamList: function (page) {
-
                     var streams = IPTVConfigurationPage.config.Bookmarks;
-
                     var html = "";
 
                     for (var i = 0; i < streams.length; i++) {
-
                         var stream = streams[i];
 
                         html += '<div class="listItem">';
-
                         html += '<i class="listItemIcon md-icon">live_tv</i>';
-
                         html += '<div class="listItemBody two-line">';
-
                         html += '<h3 class="listItemBodyText">';
                         html += stream.Name;
                         html += '</h3>';
-
                         html += '</div>';
-
                         html += '<button type="button" is="paper-icon-button-light" onclick="IPTVConfigurationPage.deleteStream(this, ' + i + ');"title="Delete"><i class="md-icon">delete</i></button>';
                         html += '</div>';
                     }
@@ -101,45 +85,34 @@
                         streamList.classList.add('hide');
                     }
                 },
-
                 deleteStream: function (button, index) {
-
                     var msg = "Are you sure you wish to delete this bookmark?";
 
                     require(['confirm'], function (confirm) {
-
                         confirm(msg, "Delete Bookmark").then(function () {
                             IPTVConfigurationPage.config.Bookmarks.splice(index, 1);
-
                             var page = $(button).parents('.page')[0];
 
                             IPTVConfigurationPage.save();
                             IPTVConfigurationPage.populateStreamList(page);
                         });
-
                     });
                 },
-
                 addStreamPopup: function (page) {
                     $('#name', page).val("").focus();
                     $('#streamPopup', page).removeClass('hide');
                     $('#name', page).focus();
                 },
-
                 save: function () {
                     Dashboard.showLoadingMsg();
 
                     ApiClient.getPluginConfiguration(IPTVConfigurationPage.pluginUniqueId).then(function (config) {
-
                         config.Bookmarks = IPTVConfigurationPage.config.Bookmarks;
-
                         ApiClient.updatePluginConfiguration(IPTVConfigurationPage.pluginUniqueId, config).then(Dashboard.processPluginConfigurationUpdateResult);
                     });
                 }
             };
-
             $('.IPTVConfigurationPage').on('pageinit', function (event) {
-
                 var page = this;
 
                 page.querySelector('.btnAdd').addEventListener('click', function () {
@@ -147,7 +120,6 @@
                 });
 
                 $('#streamForm', page).on('submit', function (e) {
-
                     $('#streamPopup', page).addClass('hide');
                     var form = this;
 
@@ -159,7 +131,6 @@
                     var userId = Dashboard.getCurrentUserId();
 
                     if (IPTVConfigurationPage.config.Bookmarks.length > 0) {
-
                         for (var i = 0, length = IPTVConfigurationPage.config.Bookmarks.length; i < length; i++) {
                             if (IPTVConfigurationPage.config.Bookmarks[i].Name == name) {
                                 newEntry = false;
@@ -172,7 +143,6 @@
                     }
 
                     if (newEntry) {
-
                         var conf = {};
 
                         conf.Name = name;
@@ -181,7 +151,6 @@
                         conf.Protocol = type;
                         conf.UserId = userId;
                         IPTVConfigurationPage.config.Bookmarks.push(conf);
-
                     }
                     IPTVConfigurationPage.save();
                     IPTVConfigurationPage.populateStreamList(page);
@@ -190,14 +159,11 @@
             });
 
             $('.IPTVConfigurationPage').on('pageshow', function (event) {
-
                 Dashboard.showLoadingMsg();
                 var page = this;
 
                 ApiClient.getPluginConfiguration(IPTVConfigurationPage.pluginUniqueId).then(function (config) {
-
                     IPTVConfigurationPage.config = config;
-
                     IPTVConfigurationPage.populateStreamList(page);
                     Dashboard.hideLoadingMsg();
                 });
