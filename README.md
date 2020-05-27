@@ -1,4 +1,1 @@
-Podcasts
-========
-
-Podcast plug-in for MB3
+# jellyfin-plugin-iptv
