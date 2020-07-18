@@ -16,7 +16,7 @@ namespace MediaBrowser.Channels.IPTV
 {
     public class Channel : IChannel, IHasCacheKey
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<Channel> _logger;
 
         public Channel(ILogger<Channel> logger)
         {
